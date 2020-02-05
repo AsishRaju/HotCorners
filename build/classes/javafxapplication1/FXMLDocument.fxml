@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import org.controlsfx.control.ToggleSwitch?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.95" prefHeight="480.0" prefWidth="835.0" style="-fx-background-color: #333335; -fx-background-radius: 15px;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapplication1.FXMLDocumentController">
+    <children>
+      <ToggleSwitch fx:id="fourButton" focusTraversable="false" layoutX="9.0" layoutY="261.0" onMouseClicked="#c4bclick" textFill="WHITE">
+         <font>
+            <Font name="MS UI Gothic" size="12.0" />
+         </font>
+      </ToggleSwitch>
+      <Label fx:id="labelon4" focusTraversable="false" layoutX="70.0" layoutY="255.0" text="On" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Bold" size="25.0" />
+         </font>
+      </Label>
+      <ToggleSwitch fx:id="twoButton" focusTraversable="false" layoutX="525.0" layoutY="14.0" onMouseClicked="#c2bclick" textFill="WHITE">
+         <font>
+            <Font name="MS UI Gothic" size="12.0" />
+         </font>
+      </ToggleSwitch>
+      <Label fx:id="labelon2" layoutX="592.0" layoutY="8.0" text="On" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Bold" size="25.0" />
+         </font>
+      </Label>
+      <ToggleSwitch fx:id="threeButton" layoutX="532.0" layoutY="259.0" onMouseClicked="#c3bclick" textFill="WHITE">
+         <font>
+            <Font name="MS UI Gothic" size="12.0" />
+         </font>
+      </ToggleSwitch>
+      <Label fx:id="labelon3" layoutX="597.0" layoutY="255.0" text="On" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Bold" size="25.0" />
+         </font>
+      </Label>
+      <Separator layoutX="-3.0" layoutY="232.0" opacity="0.15" prefHeight="17.0" prefWidth="845.0" />
+      <Separator layoutX="313.0" layoutY="-3.0" opacity="0.15" orientation="VERTICAL" prefHeight="488.0" prefWidth="16.0" />
+      <JFXComboBox fx:id="ChoiceBox4" focusTraversable="false" layoutX="30.0" layoutY="352.0" onAction="#comboSelection4" prefHeight="54.0" prefWidth="234.0" stylesheets="@combo.css" />
+      <JFXComboBox fx:id="ChoiceBox2" focusTraversable="false" layoutX="377.0" layoutY="83.0" onAction="#comboSelection2" prefHeight="54.0" prefWidth="234.0" stylesheets="@combo.css" />
+      <JFXComboBox fx:id="ChoiceBox3" focusTraversable="false" layoutX="375.0" layoutY="352.0" onAction="#comboSelection3" prefHeight="54.0" prefWidth="234.0" stylesheets="@combo.css" />
+      <Label fx:id="label1" alignment="CENTER" disable="true" layoutX="30.0" layoutY="142.0" prefHeight="30.0" prefWidth="234.0" textFill="WHITE" />
+      <Label fx:id="label4" alignment="CENTER" disable="true" layoutX="30.0" layoutY="310.0" prefHeight="30.0" prefWidth="234.0" textFill="WHITE" />
+      <Label fx:id="label2" alignment="CENTER" disable="true" layoutX="375.0" layoutY="142.0" prefHeight="30.0" prefWidth="234.0" textFill="WHITE" />
+      <Label fx:id="label3" alignment="CENTER" disable="true" layoutX="375.0" layoutY="310.0" prefHeight="30.0" prefWidth="234.0" textFill="WHITE" />
+      <Label layoutX="13.0" layoutY="446.0" text="Sensitivity" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Bold" size="18.0" />
+         </font>
+         <tooltip>
+            <Tooltip text="Change reaction time in sec" />
+         </tooltip>
+      </Label>
+      <Label layoutX="428.0" layoutY="211.0" text="Sensitivity" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Bold" size="18.0" />
+         </font>
+         <tooltip>
+            <Tooltip text="Change reaction time in sec" />
+         </tooltip>
+      </Label>
+      <Label layoutX="427.0" layoutY="446.0" text="Sensitivity" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Bold" size="18.0" />
+         </font>
+         <tooltip>
+            <Tooltip text="Change reaction time in sec" />
+         </tooltip>
+      </Label>
+      <Spinner fx:id="spinner4" focusTraversable="false" layoutX="139.0" layoutY="444.0" prefHeight="25.0" prefWidth="78.0" />
+      <Spinner fx:id="spinner2" focusTraversable="false" layoutX="549.0" layoutY="209.0" prefHeight="25.0" prefWidth="78.0" />
+      <Spinner fx:id="spinner3" focusTraversable="false" layoutX="550.0" layoutY="444.0" prefHeight="25.0" prefWidth="78.0" />
+      <ToggleSwitch fx:id="oneButton" layoutX="4.0" layoutY="14.0" onMouseClicked="#c1bclick" textFill="WHITE">
+         <font>
+            <Font name="MS UI Gothic" size="12.0" />
+         </font>
+      </ToggleSwitch>
+      <Label fx:id="labelon1" layoutX="65.0" layoutY="10.0" text="On" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Bold" size="25.0" />
+         </font>
+      </Label>
+      <JFXComboBox fx:id="ChoiceBox1" focusTraversable="false" layoutX="30.0" layoutY="83.0" onAction="#comboSelection1" prefHeight="54.0" prefWidth="234.0" stylesheets="@combo.css" />
+      <Label layoutX="13.0" layoutY="211.0" text="Sensitivity" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Bold" size="18.0" />
+         </font>
+         <tooltip>
+            <Tooltip text="Change reaction time in sec" />
+         </tooltip>
+      </Label>
+      <Spinner fx:id="spinner1" focusTraversable="false" layoutX="139.0" layoutY="209.0" prefHeight="25.0" prefWidth="78.0" />
+      <Button layoutX="30.0" layoutY="145.0" mnemonicParsing="false" onAction="#label_click_1" opacity="0.0" prefHeight="25.0" prefWidth="234.0" text="Button">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button layoutX="377.0" layoutY="145.0" mnemonicParsing="false" onAction="#label_click_1" opacity="0.0" prefHeight="25.0" prefWidth="234.0" text="Button">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button layoutX="30.0" layoutY="313.0" mnemonicParsing="false" onAction="#label_click_1" opacity="0.0" prefHeight="25.0" prefWidth="234.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button layoutX="375.0" layoutY="313.0" mnemonicParsing="false" onAction="#label_click_1" opacity="0.0" prefHeight="25.0" prefWidth="234.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <JFXButton buttonType="RAISED" focusTraversable="false" graphicTextGap="6.0" layoutX="681.0" layoutY="74.0" onAction="#reload_button" prefHeight="54.0" prefWidth="128.0" ripplerFill="#00a1ff" text="Reload " textAlignment="CENTER" textFill="WHITE">
+         <graphic>
+            <FontAwesomeIconView fill="#2d89ef" glyphName="REFRESH" size="30" />
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <DropShadow color="#0c80fc" />
+         </effect>
+         <tooltip>
+            <Tooltip text="Reload Changes" />
+         </tooltip>
+         <font>
+            <Font name="SansSerif Bold" size="17.0" />
+         </font>
+      </JFXButton>
+      <Separator layoutX="644.0" layoutY="-3.0" opacity="0.15" orientation="VERTICAL" prefHeight="488.0" prefWidth="16.0" />
+      <FontAwesomeIconView fill="#2d89ef" glyphName="CLOSE" layoutX="802.0" layoutY="33.0" onMouseClicked="#close" size="25">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </FontAwesomeIconView>
+      <FontAwesomeIconView fill="#2d89ef" glyphName="MINUS" layoutX="765.0" layoutY="33.0" onMouseClicked="#min" size="25">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </FontAwesomeIconView>
+      <JFXButton buttonType="RAISED" focusTraversable="false" graphicTextGap="6.0" layoutX="682.0" layoutY="157.0" onAction="#restore_button" prefHeight="54.0" prefWidth="128.0" ripplerFill="#00a1ff" text="Restore " textAlignment="CENTER" textFill="WHITE">
+         <graphic>
+            <FontAwesomeIconView fill="#2d89ef" glyphName="REPEAT" size="30" />
+         </graphic>
+         <font>
+            <Font name="SansSerif Bold" size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <DropShadow color="#007bff" />
+         </effect>
+         <tooltip>
+            <Tooltip text="Restart after restore" />
+         </tooltip>
+      </JFXButton>
+      <Label fx:id="labeloff1" layoutX="64.0" layoutY="10.0" text="Off" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Bold" size="25.0" />
+         </font>
+      </Label>
+      <Label fx:id="labeloff2" layoutX="593.0" layoutY="9.0" text="Off" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Bold" size="25.0" />
+         </font>
+      </Label>
+      <Label fx:id="labeloff3" layoutX="596.0" layoutY="255.0" text="Off" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Bold" size="25.0" />
+         </font>
+      </Label>
+      <Label fx:id="labeloff4" layoutX="69.0" layoutY="255.0" text="Off" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Bold" size="25.0" />
+         </font>
+      </Label>
+      <JFXButton buttonType="RAISED" focusTraversable="false" graphicTextGap="6.0" layoutX="682.0" layoutY="373.0" onAction="#about" prefHeight="54.0" prefWidth="128.0" ripplerFill="#00a1ff" text="About" textAlignment="CENTER" textFill="WHITE">
+         <graphic>
+            <FontAwesomeIconView fill="#2d89ef" glyphName="ANGLE_DOUBLE_RIGHT" size="30" />
+         </graphic>
+         <font>
+            <Font name="SansSerif Bold" size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <DropShadow color="#007bff" />
+         </effect>
+      </JFXButton>
+      <Text fill="WHITE" layoutX="677.0" layoutY="315.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Corners do matter!">
+         <font>
+            <Font name="SansSerif Bold" size="15.0" />
+         </font>
+      </Text>
+      <Label layoutX="665.0" layoutY="261.0" text="hotCorners" textFill="#2d89ef">
+         <font>
+            <Font name="SansSerif Bold Italic" size="30.0" />
+         </font>
+         <effect>
+            <Glow />
+         </effect>
+      </Label>
+      <Text fill="WHITE" layoutX="716.0" layoutY="472.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Asish.io/2020">
+         <font>
+            <Font name="SansSerif Bold" size="12.0" />
+         </font>
+      </Text>
+      <FontAwesomeIconView fill="WHITE" glyphName="COPYRIGHT" layoutX="702.0" layoutY="472.0" />
+    </children>
+</AnchorPane>

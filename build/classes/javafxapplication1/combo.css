@@ -1,0 +1,12 @@
+.combo-box-popup .list-view {
+    
+    -fx-font: 20px SansSerif;
+    -fx-font-weight: 600;
+    
+}
+.combo-box {
+    -fx-font: 20px SansSerif ;
+    -fx-font-weight: 600;
+
+    
+}
