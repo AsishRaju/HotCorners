@@ -52,9 +52,10 @@
 - In order for the effects to take place **Reload** button needs to be clicked and give it like ```2 sec``` to load new event triggers.
 - The **Restore Button** restores the default settings for HotCorners, when clicked the app closes which needs to be restarted manually.
 ## Know Problems❌
-- Tested only on the latest Build of ```Windows 10 Build 18362```
-- Some events like ```screen off``` wont run without user  permission
-- Some events do not work on older builds of ```Windows 10 ```
+- Dosen't work with multiple monitor setup.
+- Tested only on the latest Build of ```Windows 10 Build 18362```.
+- Some events like ```screen off``` wont run without user  permission.
+- Some events do not work on older builds of ```Windows 10 ```.
 ## Work In Progress🚧 
 - Working on **Code optimization**.
 - Adding more events
