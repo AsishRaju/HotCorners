@@ -60,6 +60,13 @@
 - Adding more events ```4 events added in update V1.2.0```
 - UI Changes/Fix
 
+## Channel Log
+### Update V1.2.0
+- Added more 4 more events.
+- Fixed sensitivity bug.
+- Fixed screen off bug.
+- improved code quality.
+
 ## How To Contribute🤝 
 - Yes,it is open source you can clone and change code to your need.
 - Most of the code is self explanatory, anyhow
