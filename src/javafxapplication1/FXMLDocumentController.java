@@ -26,7 +26,8 @@ import javafx.scene.control.SpinnerValueFactory;
 
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 import javafx.stage.Stage;
 import org.controlsfx.control.ToggleSwitch;
 
@@ -35,7 +36,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
 import java.util.Properties;
-import javafx.scene.control.Tooltip;
+
 
 /**
  *
@@ -47,7 +48,7 @@ public class FXMLDocumentController implements Initializable, Runnable {
     public ComboBox<String> ChoiceBox2; 
     public ComboBox<String> ChoiceBox3; 
     public ComboBox<String> ChoiceBox4; 
-    ObservableList<String>choiceList=FXCollections.observableArrayList("Choose Action","ShutDown","Log-off","Lock","Screen Off","Task Manager","Custom App");
+    ObservableList<String>choiceList=FXCollections.observableArrayList("Choose Action","ShutDown","Log-off","Lock","Screen Off","Task Manager","Mute","Un-Mute","Desktop","All Windows","Custom App");
     
     @FXML
     //path_label
@@ -76,14 +77,12 @@ public class FXMLDocumentController implements Initializable, Runnable {
     public   ToggleSwitch twoButton ;
     public   ToggleSwitch threeButton ;
     public   ToggleSwitch fourButton;
-    
-    @FXML
-     public Button restore;
+   
     
     //@iDefined_runenv
     List<String> commands = new ArrayList<String>(); //cmd_commands_list
     Thread th; //thread_instance
-    double screenHeight=0,screenWidth=0; //screen_dimension_variables
+    double screenHeight=0,screenWidth=0,mouseX=0,mouseY=0; //screen_dimension_variables
     Process cmd; //cmd_object
     long s1,s2,s3,s4; //corner_time_Sensitivity
     int cb1,cb2,cb3,cb4; // corner_dropdown_index
@@ -91,16 +90,14 @@ public class FXMLDocumentController implements Initializable, Runnable {
     String abspath1="null",abspath2="null",abspath3="null",abspath4="null"; //custom_app_path
     Boolean rc1,rc2,rc3,rc4; // corner_enable_button
     
-    //@iDefined_prevenv
-    Boolean pc1,pc2,pc3,pc4;// corner_enable_button
-    int pcb1,pcb2,pcb3,pcb4;// corner_dropdown_index
-    int ps1,ps2,ps3,ps4;// corner_time_Sensitivity
-    String pappn1,pappn2,pappn3,pappn4; //custom_app_name
-    String pabspath1,pabspath2,pabspath3,pabspath4; //custom_app_path
+    private boolean exit; 
     
+     public void stop() 
+    { 
+        exit = true; 
+    } 
     
-    
-    
+
     
     public void loadRes()
     {
@@ -110,7 +107,7 @@ public class FXMLDocumentController implements Initializable, Runnable {
         screenWidth=screenSize.getWidth()-1;
          try {
             
-            FileInputStream in = new FileInputStream("config.properties");
+            FileInputStream in = new FileInputStream("src\\config.properties");
             Properties props = new Properties();
             props.load(in);
             rc1=Boolean.parseBoolean(props.getProperty("corner1_enable"));
@@ -210,16 +207,16 @@ public class FXMLDocumentController implements Initializable, Runnable {
     public void initialize(URL url, ResourceBundle rb) {
         
         
-        
+        exit = false; 
         loadRes();
         ChoiceBox1.setItems(choiceList);
         ChoiceBox2.setItems(choiceList);
         ChoiceBox3.setItems(choiceList);
         ChoiceBox4.setItems(choiceList);
-        SpinnerValueFactory<Integer> spinnerValue1=new SpinnerValueFactory.IntegerSpinnerValueFactory(1,10,1);
-        SpinnerValueFactory<Integer> spinnerValue2=new SpinnerValueFactory.IntegerSpinnerValueFactory(1,10,1);
-        SpinnerValueFactory<Integer> spinnerValue3=new SpinnerValueFactory.IntegerSpinnerValueFactory(1,10,1);
-        SpinnerValueFactory<Integer> spinnerValue4=new SpinnerValueFactory.IntegerSpinnerValueFactory(1,10,1);
+        SpinnerValueFactory<Integer> spinnerValue1=new SpinnerValueFactory.IntegerSpinnerValueFactory(0,10,1);
+        SpinnerValueFactory<Integer> spinnerValue2=new SpinnerValueFactory.IntegerSpinnerValueFactory(0,10,1);
+        SpinnerValueFactory<Integer> spinnerValue3=new SpinnerValueFactory.IntegerSpinnerValueFactory(0,10,1);
+        SpinnerValueFactory<Integer> spinnerValue4=new SpinnerValueFactory.IntegerSpinnerValueFactory(0,10,1);
        
         this.spinner1.setValueFactory(spinnerValue1);
         this.spinner2.setValueFactory(spinnerValue2);
@@ -231,19 +228,19 @@ public class FXMLDocumentController implements Initializable, Runnable {
         ChoiceBox2.getSelectionModel().select(cb2);
         ChoiceBox3.getSelectionModel().select(cb3);
         ChoiceBox4.getSelectionModel().select(cb4);
-        if(ChoiceBox1.getSelectionModel().getSelectedIndex()==6)
+        if(ChoiceBox1.getSelectionModel().getSelectedIndex()==10)
         {
             label1.setText(appn1);
         }
-        if(ChoiceBox2.getSelectionModel().getSelectedIndex()==6)
+        if(ChoiceBox2.getSelectionModel().getSelectedIndex()==10)
         {
             label2.setText(appn2);
         }
-        if(ChoiceBox3.getSelectionModel().getSelectedIndex()==6)
+        if(ChoiceBox3.getSelectionModel().getSelectedIndex()==10)
         {
             label3.setText(appn3);
         }
-        if(ChoiceBox4.getSelectionModel().getSelectedIndex()==6)
+        if(ChoiceBox4.getSelectionModel().getSelectedIndex()==10)
         {
             label4.setText(appn4);
         }
@@ -259,8 +256,10 @@ public class FXMLDocumentController implements Initializable, Runnable {
         commands.add("shutdown /s");
         commands.add("shutdown /l");
         commands.add("rundll32.exe user32.dll, LockWorkStation");
-        commands.add("cmd /c powershell (Add-Type '[DllImport(\\\"user32.dll\\\")]^public static extern int SendMessage(int hWnd, int hMsg, int wParam, int lParam);' -Name a -Pas)::SendMessage(-1,0x0112,0xF170,2)");
-        commands.add("cmd /c taskmgr");    
+        commands.add("nircmd.exe monitor off");
+        commands.add("cmd /c taskmgr");
+        commands.add("nircmd.exe mutesysvolume 1");
+        commands.add("nircmd.exe mutesysvolume 0");
         
         th=new Thread(this);
         th.start();
@@ -303,25 +302,25 @@ public class FXMLDocumentController implements Initializable, Runnable {
 
         }
     }
-public void c3bclick(MouseEvent event)
-    {
-        if(threeButton.isSelected()==true)
+    public void c3bclick(MouseEvent event)
         {
-           ChoiceBox3.setDisable(false);
-           spinner3.setDisable(false);
-           labelon3.setVisible(true);
-           labeloff3.setVisible(false);
-        }
-        else
-        {
-            ChoiceBox3.setDisable(true);
-           spinner3.setDisable(true);
-           labelon3.setVisible(false);
-           labeloff3.setVisible(true);
+            if(threeButton.isSelected()==true)
+            {
+               ChoiceBox3.setDisable(false);
+               spinner3.setDisable(false);
+               labelon3.setVisible(true);
+               labeloff3.setVisible(false);
+            }
+            else
+            {
+                ChoiceBox3.setDisable(true);
+               spinner3.setDisable(true);
+               labelon3.setVisible(false);
+               labeloff3.setVisible(true);
 
+            }
         }
-    }
-public void c4bclick(MouseEvent event)
+    public void c4bclick(MouseEvent event)
     {
         if(fourButton.isSelected()==true)
         {
@@ -340,42 +339,43 @@ public void c4bclick(MouseEvent event)
         }
     }
     
+    public File filepicker()
+    {
+        FileChooser fc=new FileChooser();
+        fc.setInitialDirectory(new File("C:\\"));
+        fc.getExtensionFilters().addAll();
+        File selectedFile=fc.showOpenDialog(null);
+        return selectedFile;
+    }
     public void comboSelection1(ActionEvent event)
     {
-        if((ChoiceBox1.getValue()).equals("Custom App"))
+            if((ChoiceBox1.getValue()).equals("Custom App"))
             {
-                 FileChooser fc=new FileChooser();
-                 fc.setInitialDirectory(new File("C:\\Users\\windows\\Desktop"));
-                 fc.getExtensionFilters().addAll(new ExtensionFilter("Application","*.exe"));
-                 File selectedFile=fc.showOpenDialog(null);
-                 if(selectedFile !=null)
+                 File obj=filepicker();
+                 if( obj!=null)
                  {
-                        appn1=selectedFile.getName();
-                        abspath1="cmd /c"+"\"" + selectedFile.getAbsolutePath() + "\"";
+                        appn1=obj.getName();
+                        abspath1="cmd /c"+"\"" + obj.getAbsolutePath() + "\"";
                         label1.setText(appn1);
-                        System.out.println(abspath1 + appn1);
                  }
                  
             }
-        else
-        {
-            label1.setText(" ");
-        }
+            else
+            {
+                label1.setText(" ");
+            }
     }
     public void comboSelection2(ActionEvent event)
     {
         if((ChoiceBox2.getValue()).equals("Custom App"))
             {
-                 FileChooser fc=new FileChooser();
-                 fc.setInitialDirectory(new File("C:\\Users\\windows\\Desktop"));
-                 fc.getExtensionFilters().addAll(new ExtensionFilter("Application","*.exe"));
-                 File selectedFile=fc.showOpenDialog(null);
-                 if(selectedFile !=null)
+                 File obj=filepicker();
+                 if(obj !=null)
                  {
-                 appn2=selectedFile.getName();
-                 abspath2="cmd /c"+"\"" + selectedFile.getAbsolutePath() + "\"";
+                 appn2=obj.getName();
+                 abspath2="cmd /c"+"\"" + obj.getAbsolutePath() + "\"";
                  label2.setText(appn2);
-                 System.out.println(abspath2);
+
                  }
             }
         else
@@ -387,16 +387,12 @@ public void c4bclick(MouseEvent event)
     {
         if((ChoiceBox3.getValue()).equals("Custom App"))
             {
-                 FileChooser fc=new FileChooser();
-                 fc.setInitialDirectory(new File("C:\\Users\\windows\\Desktop"));
-                 fc.getExtensionFilters().addAll(new ExtensionFilter("Application","*.exe"));
-                 File selectedFile=fc.showOpenDialog(null);
-                 if(selectedFile !=null)
+                 File obj=filepicker();
+                 if(obj !=null)
                  {
-                 appn3=selectedFile.getName();
-                 abspath3="cmd /c"+"\"" + selectedFile.getAbsolutePath() + "\"";
+                 appn3=obj.getName();
+                 abspath3="cmd /c"+"\"" + obj.getAbsolutePath() + "\"";
                  label3.setText(appn3);
-                 System.out.println(abspath3);
                  }
             }
         else
@@ -408,16 +404,13 @@ public void c4bclick(MouseEvent event)
     {
         if((ChoiceBox4.getValue()).equals("Custom App"))
             {
-                 FileChooser fc=new FileChooser();
-                 fc.setInitialDirectory(new File("C:\\Users\\windows\\Desktop"));
-                 fc.getExtensionFilters().addAll(new ExtensionFilter("Application","*.exe"));
-                 File selectedFile=fc.showOpenDialog(null);
-                 if(selectedFile !=null)
+                 File obj=filepicker();
+                 if(obj !=null)
                  {
-                     appn4=selectedFile.getName();
-                 abspath4="cmd /c"+"\"" + selectedFile.getAbsolutePath() + "\"";
+                     appn4=obj.getName();
+                 abspath4="cmd /c"+"\"" + obj.getAbsolutePath() + "\"";
                  label4.setText(appn4);
-                 System.out.println(abspath4);
+
             }    }
         else
         {
@@ -456,11 +449,11 @@ public void c4bclick(MouseEvent event)
     {
         try{
             
-            FileInputStream in = new FileInputStream("config.properties");
+            FileInputStream in = new FileInputStream("src\\config.properties");
             Properties props = new Properties();
             props.load(in);
             in.close();
-            FileOutputStream out = new FileOutputStream("config.properties");
+            FileOutputStream out = new FileOutputStream("src\\config.properties");
             props.setProperty("corner1_enable", "true");            
             props.setProperty("corner1_index", "1");            
             props.setProperty("corner1_time", "1");            
@@ -490,7 +483,6 @@ public void c4bclick(MouseEvent event)
         }
         catch(Exception e){
             
-            System.out.println(e.getMessage());
             
         }
         System.exit(0);
@@ -509,7 +501,7 @@ public void c4bclick(MouseEvent event)
     public void reload_button(ActionEvent event)
     {
         
-        System.out.println(screenWidth+" "+screenHeight);
+        stop();
         cb1=ChoiceBox1.getSelectionModel().getSelectedIndex();
         cb2=ChoiceBox2.getSelectionModel().getSelectedIndex();
         cb3=ChoiceBox3.getSelectionModel().getSelectedIndex();
@@ -524,17 +516,17 @@ public void c4bclick(MouseEvent event)
         s4=spinner4.getValue();
         try{
             
-            FileInputStream in = new FileInputStream("config.properties");
+            FileInputStream in = new FileInputStream("src\\config.properties");
             Properties props = new Properties();
             props.load(in);
             in.close();
-            FileOutputStream out = new FileOutputStream("config.properties");
+            FileOutputStream out = new FileOutputStream("src\\config.properties");
             props.setProperty("corner1_enable", Boolean.toString(rc1));            
             props.setProperty("corner1_index", Integer.toString(cb1));            
             props.setProperty("corner1_time", Long.toString(s1));            
             props.setProperty("corner1_fname", appn1); 
             props.setProperty("corner1_runpath", abspath1); 
-            System.out.println(abspath1+appn1+" hyyy");
+            
             
             
             props.setProperty("corner2_enable", Boolean.toString(rc2));
@@ -560,10 +552,12 @@ public void c4bclick(MouseEvent event)
             props.setProperty("corner4_runpath", abspath4);
             props.store(out,null);
             out.close();
+            exit=false;
+            th.start();
         }
         catch(Exception e){
             
-            System.out.println(e.getMessage());
+           
             
         }
     }
@@ -572,6 +566,7 @@ public void c4bclick(MouseEvent event)
     public void runcmd(int choice)
     {
         try{
+            
             cmd = Runtime.getRuntime().exec(commands.get(choice));
         }
         catch(Exception e)
@@ -594,80 +589,145 @@ public void c4bclick(MouseEvent event)
         
     }
     
-    
+    public void deskKeyEvent()
+    {
+        try {
+        Robot robot = new Robot();
+        robot.keyPress(KeyEvent.VK_WINDOWS);
+        robot.keyPress(KeyEvent.VK_D);
+        robot.keyRelease(KeyEvent.VK_D);
+        robot.keyRelease(KeyEvent.VK_WINDOWS);
+        
+        } catch (AWTException e) {
+                e.printStackTrace();
+        }
+        
+    }
+    public void awinKeyEvent()
+    {
+        try {
+        Robot robot = new Robot();
+        robot.keyPress(KeyEvent.VK_WINDOWS);
+        robot.keyPress(KeyEvent.VK_TAB);
+        robot.keyRelease(KeyEvent.VK_TAB);
+        robot.keyRelease(KeyEvent.VK_WINDOWS);
+        
+        } catch (AWTException e) {
+                e.printStackTrace();
+        }
+        
+    }
+    public void getLoc()
+    {
+                mouseX = MouseInfo.getPointerInfo().getLocation().getX();
+                mouseY = MouseInfo.getPointerInfo().getLocation().getY();
+    }
     @Override
     public void run() {
-        s1*=1000;
-        s2*=1000;
-        s3*=1000;
-        s4*=1000;
         
-        while(true == true)
+        while(!exit)
         {
             try{
-                Thread.sleep(1000);
-//                System.out.println(spinner1.getValue());
-                System.out.println(cb1);
-                System.out.println(cb2);
-                System.out.println(cb3);
-                System.out.println(cb4);
-                double mouseX = MouseInfo.getPointerInfo().getLocation().getX();
-                double mouseY = MouseInfo.getPointerInfo().getLocation().getY();
-                System.out.println("X:" + mouseX);
-                System.out.println("Y:" + mouseY);
+               Thread.sleep(100);
+
+               
+                getLoc();
                 
                     try {
                         if(mouseX==0 && mouseY==0 && rc1 && cb1!=0)
                         { 
-                            Thread.sleep(s1) ;
-                           if(cb1!=6)
+                           Thread.sleep(s1*1000);
+                           getLoc();
+                           if(mouseX==0 && mouseY==0)
                            {
-                            runcmd(cb1);   
+                               switch(cb1){
+                                   case 10:runapp(abspath1);
+                                   break;
+                                   case 8:
+                                       deskKeyEvent();
+                                       Thread.sleep(1000);
+                                        break;
+                                   case 9:
+                                       awinKeyEvent();
+                                       Thread.sleep(1000);
+                                       break;
+                                   default: runcmd(cb1);
+                                       
+                               }
                            }
-                           else
-                           {
-                               runapp(abspath1);
-                           }
+                           
                         }
                         else if(mouseX==screenWidth && mouseY==0 && rc2 && cb2!=0)
                         { 
-                            Thread.sleep(s2) ;
-                            if(cb2!=6)
-                           {
-                            runcmd(cb2);   
-                           }
-                           else
-                           {
-                               runapp(abspath2);
-                           }
+                            Thread.sleep(s2*1000) ;
+                            getLoc();
+                            if(mouseX==screenWidth && mouseY==0)
+                            {
+                                switch(cb2){
+                                   case 10:runapp(abspath2);
+                                   break;
+                                   case 8:
+                                       deskKeyEvent();
+                                       Thread.sleep(1000);
+                                        break;
+                                   case 9:
+                                       awinKeyEvent();
+                                       Thread.sleep(1000);
+                                       break;
+                                   default: runcmd(cb2);
+                                       
+                               }
+                            }
+                            
                         }
                         else if(mouseX==screenWidth && mouseY==screenHeight && rc3 && cb3!=0)
                         { 
-                            Thread.sleep(s3) ;
-                            if(cb3!=6)
-                           {
-                            runcmd(cb3);   
-                           }
-                           else
-                           {
-                               runapp(abspath3);
-                           }
+                            Thread.sleep(s3*1000) ;
+                            getLoc();
+                            if(mouseX==screenWidth && mouseY==screenHeight)
+                            {
+                                switch(cb3){
+                                   case 10:runapp(abspath3);
+                                   break;
+                                   case 8:
+                                       deskKeyEvent();
+                                       Thread.sleep(1000);
+                                        break;
+                                   case 9:
+                                       awinKeyEvent();
+                                       Thread.sleep(1000);
+                                       break;
+                                   default: runcmd(cb3);
+                                       
+                               }
+                            }
                            
                         }
                         else if(mouseX==0 && mouseY==screenHeight && rc4 && cb4!=0)
                         { 
-                            Thread.sleep(s4) ;
-                            if(cb4!=6)
-                           {
-                            runcmd(cb4);   
-                           }
-                           else
-                           {
-                               runapp(abspath4);
-                           }
+                            Thread.sleep(s4*1000) ;
+                            getLoc();
+                            if(mouseX==0 && mouseY==screenHeight)
+                            {
+                                switch(cb4){
+                                   case 10:runapp(abspath4);
+                                   break;
+                                   case 8:
+                                       deskKeyEvent();
+                                       Thread.sleep(1000);
+                                        break;
+                                   case 9:
+                                       awinKeyEvent();
+                                       Thread.sleep(1000);
+                                       break;
+                                   default: runcmd(cb4);
+                                       
+                               }
+                            }
+                            
                         }
                         else{
-                            System.out.println("not working");
+                            
                         }
 
                     } catch (Exception e) {
@@ -675,15 +735,17 @@ public void c4bclick(MouseEvent event)
                     }
             
         }
-        catch(InterruptedException e){
+        catch(Exception e){
 
-            System.out.println(e);
+            
         } 
  
         }
+        
     }
     
     }
+
 
 
 
