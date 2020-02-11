@@ -54,16 +54,17 @@
 ## Know Problems❌
 - Dosen't work with multiple monitor setup.
 - Tested only on the latest Build of ```Windows 10 Build 18362```.
-- Some events like ```screen off``` wont run without user  permission.
 - Some events do not work on older builds of ```Windows 10 ```.
 ## Work In Progress🚧 
 - Working on **Code optimization**.
-- Adding more events
+- Adding more events ```4 events added in update V1.2.0```
 - UI Changes/Fix
+
 ## How To Contribute🤝 
 - Yes,it is open source you can clone and change code to your need.
 - Most of the code is self explanatory, anyhow
-- for any clarification on code or want to contribute contact vashish888@gmail.com 
+- for any clarification on code or want to contribute contact vashish888@gmail.com / [twitter]
 
+[twitter]: <https://twitter.com/vashish888>
 [OpenJFX]: <https://openjfx.io/>
 [jMetro]:<https://pixelduke.com/java-javafx-theme-jmetro/>
