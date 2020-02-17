@@ -1,10 +1,11 @@
-# HotCorners
+# HotCorners [![Download HotCorners](https://img.shields.io/sourceforge/dw/hotcorners.svg)](https://sourceforge.net/projects/hotcorners/files/latest/download)
+
 ![](gitres/1.png)
 <p align="center">
   <a href="https://sourceforge.net/projects/hotcorners/files/latest/download"><img alt="Download HotCorners" src="https://a.fsdn.com/con/app/sf-download-button" width=276 height=48 srcset="https://a.fsdn.com/con/app/sf-download-button?button_size=2x 2x"></a>
 </p>
 
-[![Download HotCorners](https://img.shields.io/sourceforge/dw/hotcorners.svg)](https://sourceforge.net/projects/hotcorners/files/latest/download)
+
 
 ## What It Does❓
 - HotCorners is a utility software that allow users to set events to the 4 corners of the screen
