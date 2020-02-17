@@ -3,6 +3,7 @@
 <p align="center">
   <a href="https://sourceforge.net/projects/hotcorners/files/latest/download"><img alt="Download HotCorners" src="https://a.fsdn.com/con/app/sf-download-button" width=276 height=48 srcset="https://a.fsdn.com/con/app/sf-download-button?button_size=2x 2x"></a>
 </p>
+
 [![Download HotCorners](https://img.shields.io/sourceforge/dw/hotcorners.svg)](https://sourceforge.net/projects/hotcorners/files/latest/download)
 
 ## What It Does❓
