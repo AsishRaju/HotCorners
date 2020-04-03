@@ -1,4 +1,4 @@
-# HotCorners [![Download HotCorners](https://img.shields.io/sourceforge/dw/hotcorners.svg)](https://sourceforge.net/projects/hotcorners/files/latest/download)
+# HotCorners [![Download HotCorners](https://img.shields.io/sourceforge/dt/hotcorners.svg)](https://sourceforge.net/projects/hotcorners/files/latest/download)
 
 ![](gitres/1.png)
 <p align="center">
